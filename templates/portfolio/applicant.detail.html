@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Portfolio Detail - {{ portfolio.user.first_name }} {{ portfolio.user.last_name }}{% endblock %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'applicant.list' %}">Applicants</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ portfolio.user.first_name }} {{ portfolio.user.last_name }}</li>
+        </ol>
+    </nav>
+
+    <h2 class="mb-3">Applicant Portfolio: {{ portfolio.user.first_name }} {{ portfolio.user.last_name }}</h2>
+
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Personal Information</h5>
+        </div>
+        <div class="card-body">
+            <p><strong>First Name:</strong> {{ portfolio.user.first_name }}</p>
+            <p><strong>Last Name:</strong> {{ portfolio.user.last_name }}</p>
+            <p><strong>Email:</strong> {{ portfolio.user.email }}</p>
+            <p><strong>Username:</strong> {{ portfolio.user.username }}</p>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h5 class="mb-0">Portfolio Details</h5>
+        </div>
+        <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-muted">{{ portfolio.portfolio_title }}</h6>
+            <p class="card-text">{{ portfolio.portfolio_description }}</p>
+        </div>
+    </div>
+
+    {% if portfolio.project %}
+        <div class="card mb-4">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">Project Details</h5>
+            </div>
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted">{{ portfolio.project.project_name }}</h6>
+                <p class="card-text">{{ portfolio.project.project_description }}</p>
+                <p class="card-text"><small class="text-muted">Created: {{ portfolio.project.created_at|date:"F d, Y" }}</small></p>
+                <p class="card-text"><small class="text-muted">Last Updated: {{ portfolio.project.updated_at|date:"F d, Y" }}</small></p>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            No project associated with this portfolio yet.
+        </div>
+    {% endif %}
+
+    <a href="{% url 'applicant.list' %}" class="btn btn-secondary">Back to Applicants</a>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Applicants - Junior Developer{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">Junior Developer Applicants</h1>
+
+    {% if portfolios %}
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for portfolio in portfolios %}
+                    <tr>
+                        <td>{{ portfolio.user.first_name }}</td>
+                        <td>{{ portfolio.user.last_name }}</td>
+                        <td>{{ portfolio.user.email }}</td>
+                        <td>
+                            <a href="{% url 'applicant.detail' username=portfolio.user.username %}" class="btn btn-primary btn-sm me-2">Go</a>
+                            <a href="{% url 'applicant.delete' username=portfolio.user.username %}" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            No applicants found for the Junior Developer position.
+        </div>
+    {% endif %}
+{% endblock %}
